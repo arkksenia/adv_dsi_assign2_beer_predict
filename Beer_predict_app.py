@@ -1,8 +1,7 @@
 import streamlit as st
 import pandas as pd
 import joblib 
-
-st.title('Beer Type Prediction Project')
+import numpy as np
 
 # Load the KNN model
 model = joblib.load('models/knn_pipeline_compression_7.joblib')
@@ -13,15 +12,14 @@ with open('models/brewery_names.pkl', 'rb') as file:
 
 print(brewery_names)
 
-
 # Get user inputs
-    
+st.title('Beer Type Prediction Project')
 brewery_name = st.selectbox('Brewery Name', brewery_names)
-review_aroma = st.number_input('Input Aroma Rating (1-5)')
-review_appearance = st.number_input('Input Appearance Rating (1-5)')
-review_palate = st.number_input('Input Palate Rating (1-5)')
-review_taste = st.number_input('Input Taste Rating (1-5)')
-beer_abv = st.number_input('Input Beer Abv (0-20)')
+review_aroma = st.slider('Input Aroma Rating (1-5)', min_value=1.0, max_value=5.0, step=0.1)
+review_appearance = st.slider('Input Appearance Rating (1-5)', min_value=1.0, max_value=5.0, step=0.1)
+review_palate = st.slider('Input Palate Rating (1-5)', min_value=1.0, max_value=5.0, step=0.1)
+review_taste = st.slider('Input Taste Rating (1-5)', min_value=1.0, max_value=5.0, step=0.1)
+beer_abv = st.slider('Input Beer ABV', min_value=0.0, max_value=95.0, step=0.1)
 
 # Create a predict button
 if st.button('Predict Beer Type'):
@@ -43,7 +41,6 @@ if st.button('Predict Beer Type'):
 
     # Display the predicted beer style
     st.write(f'<h2>Predicted Beer Type: {prediction[0]}</h2>', unsafe_allow_html=True)
-
 
 
 
